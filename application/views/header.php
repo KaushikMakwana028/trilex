@@ -19,6 +19,11 @@
             --text-color: #0B3C5D;
         }
 
+        ::selection {
+            background: var(--primary-color);
+            color: white;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
