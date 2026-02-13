@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/kaushik/trilex/';
+$config['base_url'] = 'http://localhost/kaushik_php/ci_project/trilex';
 /* https://trilexadvisory.com */
-
+    
 /*
 |--------------------------------------------------------------------------
 | Index File

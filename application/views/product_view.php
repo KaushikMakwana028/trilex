@@ -157,6 +157,20 @@
         box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
     }
 
+    /* .free-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #dc3545;
+        color: #fff;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 20px;
+        z-index: 10;
+    } */
+
+
     /* ---------- MOBILE ---------- */
     @media (max-width: 768px) {
         .hero-section {
@@ -193,7 +207,7 @@
 
 <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         function isMobile() {
             return window.innerWidth <= 768;
         }
@@ -207,7 +221,7 @@
                     device: isMobile() ? 'mobile' : 'desktop'
                 },
                 dataType: "json",
-                success: function(res) {
+                success: function (res) {
                     $("#product-container").html(res.html);
                     $("#pagination-container").html(res.pagination);
                 }
@@ -216,13 +230,13 @@
 
         loadProducts();
 
-        $(document).on('click', '.pagination a', function(e) {
+        $(document).on('click', '.pagination a', function (e) {
             e.preventDefault();
             let page = $(this).data('page');
             loadProducts(page);
         });
 
-        $(window).on('resize', function() {
+        $(window).on('resize', function () {
             loadProducts(1); // reload for new device layout
         });
     });

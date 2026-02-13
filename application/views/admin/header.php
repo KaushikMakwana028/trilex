@@ -270,7 +270,7 @@
                 </li>
 
                 <li>
-                    <a href="<?= base_url('admin/paymentsettings'); ?>" class="">
+                    <a href="<?= base_url('admin/paymentSettings'); ?>" class="">
                         <div class="parent-icon"><i class='bx bx-qr'></i></div>
                         <div class="menu-title">Payment QR Settings</div>
                     </a>

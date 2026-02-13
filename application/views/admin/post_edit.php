@@ -33,7 +33,7 @@
                     <div class="mb-3">
                         <label class="form-label">Post Title</label>
                         <input type="text" name="post_title" class="form-control"
-                               value="<?= htmlspecialchars($post_edit->title) ?>" required>
+                            value="<?= htmlspecialchars($post_edit->title) ?>" required>
                     </div>
 
                     <!-- Description -->
@@ -44,22 +44,41 @@
                         </textarea>
                     </div>
 
+                    <!-- Post Type -->
+                    <div class="mb-3">
+                        <label class="form-label">Post Type</label>
+                        <select name="post_type" id="postType" class="form-control" required>
+                            <option value="free" <?= ($post_edit->post_type == 'free') ? 'selected' : '' ?>>Free</option>
+                            <option value="paid" <?= ($post_edit->post_type == 'paid') ? 'selected' : '' ?>>Paid</option>
+                        </select>
+                    </div>
+
+
                     <!-- Price -->
                     <div class="mb-3">
                         <label class="form-label">Price</label>
-                        <input type="number" name="price" class="form-control"
-                               value="<?= htmlspecialchars($post_edit->price) ?>" required>
+                        <input type="number" name="price" class="form-control" id="postPrice"
+                            value="<?= htmlspecialchars($post_edit->price) ?>">
                     </div>
 
+                    <!-- Drive Link (Only for Free Posts) -->
+                    <div class="mb-3" id="driveLinkWrapper">
+                        <label class="form-label">Drive Download Link</label>
+                        <input type="text" name="drive_link" id="driveLink" class="form-control"
+                            value="<?= htmlspecialchars($post_edit->drive_link ?? '') ?>"
+                            placeholder="https://drive.google.com/...">
+                    </div>
+
+
                     <!-- Existing File Preview -->
-                    <?php if (!empty($post_edit->file_path)) : ?>
+                    <?php if (!empty($post_edit->file_path)): ?>
                         <div class="mb-3">
                             <label class="form-label">Current File</label><br>
-                            <?php if (preg_match('/\.(mp4|avi|mov|mkv)$/i', $post_edit->file_path)) : ?>
+                            <?php if (preg_match('/\.(mp4|avi|mov|mkv)$/i', $post_edit->file_path)): ?>
                                 <video width="250" controls>
                                     <source src="<?= base_url($post_edit->file_path) ?>">
                                 </video>
-                            <?php else : ?>
+                            <?php else: ?>
                                 <img src="<?= base_url($post_edit->file_path) ?>" width="150" class="rounded">
                             <?php endif; ?>
                         </div>
@@ -68,8 +87,7 @@
                     <!-- Upload New File -->
                     <div class="mb-3">
                         <label class="form-label">Change File (Optional)</label>
-                        <input type="file" name="post_file" class="form-control"
-                               accept="image/*,video/*">
+                        <input type="file" name="post_file" class="form-control" accept="image/*,video/*">
                     </div>
 
                     <!-- Submit -->
@@ -131,4 +149,29 @@
             }
         });
     });
+
+    // Enable / Disable price on dropdown change
+    $('#postType').on('change', function () {
+
+        if ($(this).val() === 'free') {
+
+            $('#postPrice').val(0);
+            $('#postPrice').prop('disabled', true);
+
+            $('#driveLinkWrapper').show();
+            $('#driveLink').prop('required', true);
+
+        } else {
+
+            $('#postPrice').prop('disabled', false);
+
+            $('#driveLinkWrapper').hide();
+            $('#driveLink').prop('required', false);
+        }
+
+    });
+
+    // Trigger on page load
+    $('#postType').trigger('change');
+
 </script>

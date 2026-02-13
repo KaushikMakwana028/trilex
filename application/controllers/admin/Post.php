@@ -37,8 +37,8 @@ class Post extends CI_Controller
     public function fetch_posts()
     {
         $search = $this->input->get('search');
-        $page   = (int) $this->input->get('page') ?: 1;
-        $limit  = 5;
+        $page = (int) $this->input->get('page') ?: 1;
+        $limit = 5;
         $offset = ($page - 1) * $limit;
 
         /* ----------- CORRECT COUNT (MOST IMPORTANT FIX) ----------- */
@@ -59,47 +59,58 @@ class Post extends CI_Controller
         $posts = $this->db->get()->result();
 
         /* ----------- BUILD TABLE HTML ----------- */
-        $html  = '';
+        $html = '';
         $index = $offset + 1;
 
         foreach ($posts as $post) {
 
+            // Status UI
             $status_ui = $post->isActive
                 ? '<div class="d-flex align-items-center text-success">
-                    <i class="bx bx-radio-circle-marked align-middle font-18 me-1"></i>
-                    <span>Active</span>
-               </div>'
+                <i class="bx bx-radio-circle-marked align-middle font-18 me-1"></i>
+                <span>Active</span>
+           </div>'
                 : '<div class="d-flex align-items-center text-danger">
-                    <i class="bx bx-radio-circle-marked align-middle font-18 me-1"></i>
-                    <span>Inactive</span>
-               </div>';
+                <i class="bx bx-radio-circle-marked align-middle font-18 me-1"></i>
+                <span>Inactive</span>
+           </div>';
 
+            // Eye icon
             $eye_icon = $post->isActive
-                ? '<a href="javascript:void(0);" class="toggle-status text-info" 
-                 data-id="' . $post->id . '" title="Deactivate">
-                 <i class="bx bx-show"></i>
-               </a>'
-                : '<a href="javascript:void(0);" class="toggle-status text-danger" 
-                 data-id="' . $post->id . '" title="Activate">
-                 <i class="bx bx-hide"></i>
-               </a>';
+                ? '<a href="javascript:void(0);" class="toggle-status text-info"
+             data-id="' . $post->id . '" title="Deactivate">
+             <i class="bx bx-show"></i>
+           </a>'
+                : '<a href="javascript:void(0);" class="toggle-status text-danger"
+             data-id="' . $post->id . '" title="Activate">
+             <i class="bx bx-hide"></i>
+           </a>';
 
             $action_ui = '<div class="d-flex order-actions">
-                        <a href="' . base_url('admin/post/post_edit/' . $post->id) . '" 
-                           class="me-3 text-primary" title="Edit">
-                            <i class="bx bx-edit"></i>
-                        </a>
-                        ' . $eye_icon . '
-                      </div>';
+                    <a href="' . base_url('admin/post/post_edit/' . $post->id) . '"
+                       class="me-3 text-primary" title="Edit">
+                        <i class="bx bx-edit"></i>
+                    </a>
+                    ' . $eye_icon . '
+                  </div>';
 
+            // ✅ Price UI FIX
+            if ($post->post_type == 'free') {
+                $price_ui = '<span class="badge bg-success">FREE</span>';
+            } else {
+                $price_ui = '<span class="badge bg-primary">₹ ' . $post->price . '</span>';
+            }
+
+            // Build row
             $html .= '<tr>
-                    <td>' . $index++ . '</td>
-                    <td>' . $post->title . '</td>
-                    <td>' . $post->price . '</td>
-                    <td>' . $status_ui . '</td>
-                    <td>' . $action_ui . '</td>
-                  </tr>';
+            <td>' . $index++ . '</td>
+            <td>' . htmlspecialchars($post->title) . '</td>
+            <td>' . $price_ui . '</td>
+            <td>' . $status_ui . '</td>
+            <td>' . $action_ui . '</td>
+          </tr>';
         }
+
 
         if (empty($html)) {
             $html = '<tr><td colspan="5" class="text-center">No posts found</td></tr>';
@@ -107,7 +118,7 @@ class Post extends CI_Controller
 
         /* ----------- PAGINATION WITH « and » ----------- */
         $total_pages = ceil($total / $limit);
-        $pagination  = '';
+        $pagination = '';
 
         if ($total_pages > 1) {
 
@@ -134,7 +145,7 @@ class Post extends CI_Controller
         }
 
         echo json_encode([
-            'html'       => $html,
+            'html' => $html,
             'pagination' => $pagination
         ]);
     }
@@ -178,11 +189,17 @@ class Post extends CI_Controller
     {
         $id = $this->input->post('post_id');
 
+        $postType = $this->input->post('post_type');
+
         $data = [
             'title' => $this->input->post('post_title'),
             'description' => $this->input->post('post_description'),
-            'price' => $this->input->post('price'),
+            'post_type' => $postType,
+            'price' => ($postType == 'paid') ? $this->input->post('price') : 0,
+            'drive_link' => ($postType == 'free') ? $this->input->post('drive_link') : NULL,
         ];
+
+
 
         if (!empty($_FILES['post_file']['name'])) {
             $config['upload_path'] = './uploads/posts/';

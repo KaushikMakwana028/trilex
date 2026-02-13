@@ -31,7 +31,7 @@
                                 <div class="mb-3">
                                     <label for="postTitle" class="form-label">Post Title</label>
                                     <input type="text" name="post_title" class="form-control" id="postTitle"
-                                           placeholder="Enter post title" required>
+                                        placeholder="Enter post title" required>
                                     <div class="invalid-feedback">Please enter the post title.</div>
                                 </div>
 
@@ -39,23 +39,40 @@
                                 <div class="mb-3">
                                     <label for="postDescription" class="form-label">Post Description</label>
                                     <textarea name="post_description" class="form-control" id="postDescription" rows="6"
-                                              placeholder="Enter post description"></textarea>
+                                        placeholder="Enter post description"></textarea>
                                     <div class="invalid-feedback">Please enter the post description.</div>
                                 </div>
 
-                                <!-- Post Price -->
+                                <!-- Post Type -->
                                 <div class="mb-3">
-                                    <label for="postPrice" class="form-label">Price</label>
-                                    <input type="number" name="price" class="form-control" id="postPrice"
-                                           placeholder="Enter price" required>
-                                    <div class="invalid-feedback">Please enter the price.</div>
+                                    <label class="form-label">Post Type</label>
+                                    <select name="post_type" id="postType" class="form-control" required>
+                                        <option value="">Select Type</option>
+                                        <option value="paid" <?= isset($post_edit) && $post_edit->post_type == 'paid' ? 'selected' : '' ?>>Paid</option>
+                                        <option value="free" <?= isset($post_edit) && $post_edit->post_type == 'free' ? 'selected' : '' ?>>Free</option>
+                                    </select>
                                 </div>
+
+                                <!-- Price Field -->
+                                <div class="mb-3" id="priceBox">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" name="price" class="form-control"
+                                        value="<?= isset($post_edit) ? $post_edit->price : '' ?>">
+                                </div>
+
+                                <!-- Drive Link Field -->
+                                <div class="mb-3" id="driveBox">
+                                    <label class="form-label">Google Drive Link</label>
+                                    <input type="text" name="drive_link" class="form-control"
+                                        value="<?= isset($post_edit) ? $post_edit->drive_link : '' ?>">
+                                </div>
+
 
                                 <!-- Upload File (Video or Image) -->
                                 <div class="mb-3">
                                     <label for="postFile" class="form-label">Upload File (Video/Image)</label>
                                     <input type="file" name="post_file" class="form-control" id="postFile"
-                                           accept="video/*,image/*" required>
+                                        accept="video/*,image/*" required>
                                     <div class="invalid-feedback">Please upload a video or image.</div>
                                 </div>
 
@@ -77,57 +94,79 @@
 <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
 <script>
-CKEDITOR.replace('postDescription');
+    CKEDITOR.replace('postDescription');
 
-$(document).ready(function () {
-    $("#PostForm").on("submit", function (e) {
-        e.preventDefault();
+    $(document).ready(function () {
+        $("#PostForm").on("submit", function (e) {
+            e.preventDefault();
 
-        // Update CKEditor textarea
-        for (instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
-        }
-
-        var form = $(this)[0];
-        var formData = new FormData(form);
-
-        $.ajax({
-            url: "<?= base_url('admin/post/save'); ?>",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: "json",
-            beforeSend: function () {
-                Swal.fire({
-                    title: 'Please wait...',
-                    text: 'Saving post details',
-                    allowOutsideClick: false,
-                    didOpen: () => Swal.showLoading()
-                });
-            },
-            success: function (res) {
-                Swal.close();
-                if (res.status) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: res.message || 'Post saved successfully!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(() => {
-                        window.location.href = "<?= base_url('admin/post'); ?>";
-                    });
-                } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: res.message || 'Something went wrong!' });
-                }
-            },
-            error: function (xhr, status, error) {
-                Swal.close();
-                Swal.fire({ icon: 'error', title: 'Request Failed', text: 'Could not save post. Please try again!' });
-                console.error(error);
+            // Update CKEditor textarea
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
             }
+
+            var form = $(this)[0];
+            var formData = new FormData(form);
+
+            $.ajax({
+                url: "<?= base_url('admin/post/save'); ?>",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                beforeSend: function () {
+                    Swal.fire({
+                        title: 'Please wait...',
+                        text: 'Saving post details',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading()
+                    });
+                },
+                success: function (res) {
+                    Swal.close();
+                    if (res.status) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: res.message || 'Post saved successfully!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href = "<?= base_url('admin/post'); ?>";
+                        });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: res.message || 'Something went wrong!' });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.close();
+                    Swal.fire({ icon: 'error', title: 'Request Failed', text: 'Could not save post. Please try again!' });
+                    console.error(error);
+                }
+            });
         });
     });
-});
+
+    function toggleFields() {
+        let type = document.getElementById("postType").value;
+
+        if (type === "paid") {
+            document.getElementById("priceBox").style.display = "block";
+            document.getElementById("driveBox").style.display = "none";
+        } else if (type === "free") {
+            document.getElementById("priceBox").style.display = "none";
+            document.getElementById("driveBox").style.display = "block";
+        } else {
+            document.getElementById("priceBox").style.display = "none";
+            document.getElementById("driveBox").style.display = "none";
+        }
+    }
+
+    document.getElementById("postType").addEventListener("change", toggleFields);
+
+    // Run on page load (important for edit page)
+    window.onload = toggleFields;
+
+
 </script>

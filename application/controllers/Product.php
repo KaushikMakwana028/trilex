@@ -43,55 +43,98 @@ class Product extends CI_Controller
 
             $ext = pathinfo($product->file_path, PATHINFO_EXTENSION);
 
-            // Media (image / video)
+            /* ===== MEDIA ===== */
+
             if ($ext === 'mp4') {
                 $media = '
-            <div class="media">
-                <video autoplay muted loop playsinline class="w-100 h-100">
-                    <source src="' . base_url($product->file_path) . '" type="video/mp4">
-                </video>
-            </div>';
+        <video autoplay muted loop playsinline class="w-100 h-100">
+            <source src="' . base_url($product->file_path) . '" type="video/mp4">
+        </video>';
             } else {
                 $media = '
-            <div class="media">
-                <img src="' . base_url($product->file_path) . '" 
-                     alt="' . htmlspecialchars($product->title) . '" 
-                     class="w-100 h-100">
-            </div>';
+        <img src="' . base_url($product->file_path) . '" 
+             alt="' . htmlspecialchars($product->title) . '" 
+             class="w-100 h-100">';
             }
 
             $shortDesc = substr(strip_tags($product->description), 0, 90) . '…';
 
-            $html .= '
-        <div class="col-lg-4 col-md-6">
-            <div class="product-card h-100">
+            /* ===== PRICE + BUTTON LOGIC ===== */
 
-                ' . $media . '
+            $badge = ''; // always define
 
-                <div class="product-card-body text-start">
+            if (strtolower(trim($product->post_type)) == 'free') {
 
-                    <h5 class="product-card-title mb-2">
-                        ' . htmlspecialchars($product->title) . '
-                    </h5>
-
-                    <div class="product-card-price mb-3">
-                        ₹' . number_format($product->price, 2) . '
-                    </div>
-
-                    <p class="text-muted small mb-4">
-                        ' . $shortDesc . '
-                    </p>
-
-                    <a href="' . base_url('product/detail/' . $product->id) . '" 
-                       class="btn btn-primary w-100 fw-semibold" style="
-                       background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
-                        View Details <i class="fas fa-arrow-up-right-from-square ms-2"></i>
-                    </a>
-
-                </div>
-            </div>
+                // FREE PRODUCT UI
+                $price_ui = '
+        <div class="product-card-price mb-3">
+            <span class="badge bg-danger px-3 py-2">FREE</span>
         </div>';
+
+                // If drive link exists → open directly
+                if (!empty($product->drive_link)) {
+                    $button_link = base_url('product/detail/' . $product->id);
+                    $button_text = 'View Details <i class="bx bx-right-arrow-alt"></i>';
+                    $target = '';
+
+                } 
+                // else {
+                //     $button_link = base_url('product/detail/' . $product->id);
+                //     $button_text = 'View Details';
+                //     $target = '';
+                // }
+
+                // Small red badge on image
+                // $badge = '<span class="free-badge">FREE</span>';
+
+            } else {
+
+                // PAID PRODUCT UI
+                $price_ui = '
+        <div class="product-card-price mb-3">
+            ₹' . number_format($product->price, 2) . '
+        </div>';
+
+                $button_link = base_url('product/detail/' . $product->id);
+                $button_text = 'View Details';
+                $target = '';
+            }
+
+            /* ===== HTML OUTPUT ===== */
+
+            $html .= '
+    <div class="col-lg-4 col-md-6">
+        <div class="product-card h-100">
+
+            <div class="media position-relative">
+                ' . $badge . '
+                ' . $media . '
+            </div>
+
+            <div class="product-card-body text-start">
+
+                <h5 class="product-card-title mb-2">
+                    ' . htmlspecialchars($product->title) . '
+                </h5>
+
+                ' . $price_ui . '
+
+                <p class="text-muted small mb-4">
+                    ' . $shortDesc . '
+                </p>
+
+                <a href="' . $button_link . '" 
+                   ' . $target . '
+                   class="btn btn-primary w-100 fw-semibold">
+                    ' . $button_text . '
+                </a>
+
+            </div>
+        </div>
+    </div>';
         }
+
+
 
         /* ---------- PAGINATION ---------- */
         $total_pages = ceil($total / $limit);
@@ -152,23 +195,35 @@ class Product extends CI_Controller
 
     public function checkout($id)
     {
-        if (!$this->session->userdata('user_id')) {
-            redirect('login');
-        }
-        $data['product'] = $this->general_model->getOne('posts', ['id' => $id, 'isActive' => 1]);
-        //   $data['user_name'] = $this->session->userdata('user_name');
+        $product = $this->general_model->getOne('posts', ['id' => $id]);
 
-        if (!$data['product']) {
+        if (!$product) {
             show_404();
         }
 
-        // FETCH DYNAMIC QR FROM DATABASE
-        $data['qr'] = $this->db->get('payment_settings')->row();
+        // Block free products
+        if (strtolower(trim($product->post_type)) == 'free') {
+            if (!empty($product->drive_link)) {
+                redirect($product->drive_link);
+            }
+
+            $this->session->set_flashdata('no_drive_link', true);
+            redirect('product/detail/' . $product->id);
+        }
+
+        // 🔥 FETCH QR SETTINGS FROM DATABASE
+        $qr = $this->db->get('payment_settings')->row(); // change table name if different
+
+        $data['product'] = $product;
+        $data['qr'] = $qr;   // VERY IMPORTANT
 
         $this->load->view('header');
         $this->load->view('payment_view', $data);
         $this->load->view('footer');
     }
+
+
+
     public function submit()
     {
         $this->load->helper('url');
