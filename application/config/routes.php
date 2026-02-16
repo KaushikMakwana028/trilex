@@ -59,7 +59,8 @@ $route['blog/fetch'] = 'blog/fetchBlogs';
 $route['register'] = 'login/register';
 $route['product'] = 'product';
 $route['product/detail/(:num)'] = 'product/detail/$1';
-$route['checkout/(:num)'] = 'product/checkout/$1';
+$route['product/checkout/(:num)'] = 'product/checkout/$1';
+$route['product/submit'] = 'product/submit';
 $route['account'] = 'home/account';
 $route['history'] = 'home/history';
 $route['profile'] = 'home/profile';
@@ -102,8 +103,11 @@ $route['service_category'] = 'admin/service';
 $route['add_service'] = 'admin/service/add_service';
 $route['all_service'] = 'admin/service/list_services';
 
-
-
+// Payment Settings Routes
+$route['admin/paymentsettings'] = 'admin/paymentsettings/index';
+$route['admin/paymentsettings/update_qr'] = 'admin/paymentsettings/update_qr';
+$route['admin/paymentsettings/update_bank'] = 'admin/paymentsettings/update_bank';
+$route['admin/paymentsettings/index'] = 'admin/paymentsettings/index';
 
 $route['logout'] = 'admin/login/logout';
 

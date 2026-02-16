@@ -211,11 +211,11 @@ class Product extends CI_Controller
             redirect('product/detail/' . $product->id);
         }
 
-        // 🔥 FETCH QR SETTINGS FROM DATABASE
-        $qr = $this->db->get('payment_settings')->row(); // change table name if different
+        // 🔥 FETCH PAYMENT SETTINGS FROM DATABASE
+        $payment = $this->db->get('payment_settings')->row(); // change table name if different
 
         $data['product'] = $product;
-        $data['qr'] = $qr;   // VERY IMPORTANT
+        $data['payment'] = $payment;   // VERY IMPORTANT
 
         $this->load->view('header');
         $this->load->view('payment_view', $data);

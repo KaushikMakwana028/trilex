@@ -186,6 +186,15 @@
         margin: 15px 0;
     }
 
+    .profile-icon {
+        font-size: 40px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 18px;
+        border-radius: 50%;
+    }
+
+
     @media (max-width: 480px) {
         .container {
             padding: 15px;
@@ -225,8 +234,7 @@
             font-size: 28px;
         }
 
-        .profile-card 
-        {
+        .profile-card {
             margin-top: 4.5rem;
         }
     }
@@ -235,7 +243,7 @@
 <div class="container">
     <!-- Profile Card -->
     <div class="profile-card">
-        <div class="avatar">🙍🏻‍♂️</div>
+        <div class="avatar profile-icon"><i class="fas fa-user-tie"></i></div>
         <div class="profile-name">
             <?= isset($this->session) && $this->session->userdata('user_name') ? htmlspecialchars($this->session->userdata('user_name')) : 'Guest User'; ?>
         </div>
@@ -252,7 +260,7 @@
     <!-- Profile Settings -->
     <div class="menu-section">
         <div class="menu-header">
-            <div class="menu-icon">🙍🏻‍♂️</div>
+            <div class="menu-icon text-light"><i class="fas fa-user-tie"></i></div>
             <div class="menu-title">Profile Settings</div>
         </div>
         <a href="<?= base_url('account'); ?>" class="submenu-item">
