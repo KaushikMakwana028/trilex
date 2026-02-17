@@ -4,9 +4,9 @@
         <!-- Hero Section -->
         <div class="about-hero">
             <div class="hero-badge">EST. 2020</div>
-            <h1>About Our Company</h1>
+            <h1><?= $about->title ?></h1>
             <p>Delivering excellence, trust, and innovation for a smarter future</p>
-            <div class="hero-stats">
+            <!-- <div class="hero-stats">
                 <div class="stat-item">
                     <div class="stat-number">500+</div>
                     <div class="stat-label">Happy Clients</div>
@@ -21,7 +21,7 @@
                     <div class="stat-number">5+ Years</div>
                     <div class="stat-label">Experience</div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="about-content">
@@ -31,20 +31,12 @@
                 <div class="section-label">Our Journey</div>
                 <h2>Our Story</h2>
                 <div class="story-content">
-                    <p>
-                        Founded in 2020, our company emerged with a clear vision — to redefine industry standards through
-                        innovation, integrity, and client-focused solutions. What began as a small team of passionate
-                        professionals has evolved into a trusted organization serving clients across diverse sectors.
-                    </p>
-                    <p>
-                        Our growth has been driven by strong relationships, consistent performance, and an unwavering
-                        commitment to quality. We measure our success by the long-term value we create for our clients.
-                    </p>
+                    <?= html_entity_decode($about->description) ?>  
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-year">2020</div>
-                        <div class="timeline-content">Company Founded</div>
+                        <div class="timeline-content">Organization  Founded</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-year">2022</div>
@@ -152,34 +144,7 @@
                 </div>
             </div>
 
-            <!-- Why Choose Us Section -->
-            <div class="about-section why-choose-section highlight">
-                <div class="section-label">Your Success Partner</div>
-                <h2>Why Choose Us?</h2>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <div class="feature-number">01</div>
-                        <h4>Quality Service</h4>
-                        <p>Delivering precision, integrity, and excellence in every solution.</p>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">02</div>
-                        <h4>Global Vision</h4>
-                        <p>Bridging Finance, Law & Technology to shape the future worldwide.</p>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">03</div>
-                        <h4>Innovative Thinking</h4>
-                        <p>Turning complex challenges into transformative opportunities.</p>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-number">04</div>
-                        <h4>Long-term Partnership</h4>
-                        <p>We're committed to your sustained growth and continuous success</p>
-                    </div>
-                </div>
-            </div>
-
+        
             <!-- CTA Section -->
             <div class="cta-section">
                 <h2>Ready to Work Together?</h2>

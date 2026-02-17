@@ -24,7 +24,7 @@ class Login extends CI_Controller
     {
         $this->load->view('header');
         $this->load->view('login_view');
-        $this->load->view('footer');
+        $this->load_footer();
 
     }
     // ===== LOGIN =====
@@ -153,13 +153,19 @@ class Login extends CI_Controller
     {
         $this->load->view('header');
         $this->load->view('register_view');
-        $this->load->view('footer');
+        $this->load_footer();
     }
     public function send_otp()
     {
         $this->load->view('header');
         $this->load->view('otp_form');
-        $this->load->view('footer');
+        $this->load_footer();
+    }
+
+    private function load_footer()
+    {
+        $data['footer_products'] = $this->general_model->getFooterProducts();
+        $this->load->view('footer', $data);
     }
 
 }

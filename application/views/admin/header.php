@@ -225,6 +225,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li>
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class='bx bx-cog'></i></div> <!-- Blog main -->
@@ -239,6 +240,28 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon">
+                            <i class='bx bx-bulb'></i>
+                        </div>
+                        <div class="menu-title">Expertise</div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="<?= base_url('admin/expertise'); ?>">
+                                <i class='bx bx-list-ul'></i> All Expertise
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= base_url('admin/expertise/add'); ?>">
+                                <i class='bx bx-plus'></i> Add New
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
 
 
                 <li>
@@ -276,7 +299,19 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="<?= base_url('admin/about'); ?>">
+                        <div class="parent-icon"><i class='bx bx-info-circle'></i></div>
+                        <div class="menu-title">About Page</div>
+                    </a>
+                </li>
 
+                <li>
+                    <a href="<?= base_url('admin/contact'); ?>">
+                        <div class="parent-icon"><i class='bx bx-phone'></i></div>
+                        <div class="menu-title">Contact Page</div>
+                    </a>
+                </li>
 
                 <li>
                     <a href="<?= base_url('logout'); ?>" class="">

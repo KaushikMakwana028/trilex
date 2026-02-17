@@ -366,4 +366,55 @@ class Service extends CI_Controller
             ]);
         }
     }
+
+    public function delete_category($id = null)
+    {
+        header('Content-Type: application/json');
+
+        if (!$id) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Category ID missing'
+            ]);
+            return;
+        }
+
+        $id = (int) $id;
+
+        // Check if category exists
+        $query = $this->db->get_where('service_category', ['id' => $id]);
+
+        if ($query->num_rows() == 0) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Category not found'
+            ]);
+            return;
+        }
+
+        // Optional: prevent delete if subcategory exists
+        $sub = $this->db->get_where('service_category', ['parent_id' => $id]);
+        if ($sub->num_rows() > 0) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Cannot delete. Subcategories exist.'
+            ]);
+            return;
+        }
+
+        // Delete category
+        $this->db->delete('service_category', ['id' => $id]);
+
+        if ($this->db->affected_rows() > 0) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Category deleted successfully'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Delete failed'
+            ]);
+        }
+    }
 }

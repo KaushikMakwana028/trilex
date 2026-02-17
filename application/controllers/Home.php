@@ -16,29 +16,40 @@ class Home extends CI_Controller
         $this->load->helper('url');
 
         $this->load->model('general_model');
-
     }
 
     public function index()
     {
-        $this->load->view('header');
-        $this->load->view('home_view');
-        $this->load->view('footer');
+        $data['expertise'] = $this->db
+            ->where('isActive', 1)
+            ->order_by('id', 'DESC')
+            ->get('expertise')
+            ->result();
 
+        $this->load->view('header');
+        $this->load->view('home_view', $data);
+        $this->load_footer();
     }
+
 
     public function about()
     {
+        $this->load->model('general_model');
+        $data['about'] = $this->general_model->getOne('about_page', ['id' => 1]);
+
         $this->load->view('header');
-        $this->load->view('about_view');
-        $this->load->view('footer');
+        $this->load->view('about_view', $data);
+        $this->load_footer();
     }
 
     public function contact()
     {
+        $this->load->model('general_model');
+
+        $data['contact'] = $this->general_model->getOne('contact_page', ['id' => 1]);
         $this->load->view('header');
-        $this->load->view('contact_view');
-        $this->load->view('footer');
+        $this->load->view('contact_view', $data);
+        $this->load_footer();
     }
     public function blog()
     {
@@ -46,7 +57,7 @@ class Home extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('blog_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     public function detail($id = null)
@@ -67,7 +78,7 @@ class Home extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('blog_details', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
     public function account()
     {
@@ -84,7 +95,7 @@ class Home extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('profile_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
     public function update_user()
     {
@@ -141,7 +152,7 @@ class Home extends CI_Controller
         // Load history view (initial page)
         $this->load->view('header');
         $this->load->view('history_view'); // we'll fetch orders via AJAX
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     // AJAX request to fetch orders
@@ -196,7 +207,7 @@ class Home extends CI_Controller
     {
         $this->load->view('header');
         $this->load->view('mobile_profile_view');
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     public function service($id = null, $slug = null)
@@ -212,7 +223,7 @@ class Home extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('service_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
 
@@ -225,13 +236,29 @@ class Home extends CI_Controller
         // if (!$data['service']) {
         //     show_404();
         // }
-// echo "<pre>";
-// print_r($data);
-// die;
+        // echo "<pre>";
+        // print_r($data);
+        // die;
         $this->load->view('header');
         $this->load->view('_service_details', $data);
-        $this->load->view('footer');
+        $this->load_footer();
+    }
+
+    public function expertise_section()
+    {
+        $data['expertise'] = $this->db
+            ->where('isActive', 1)
+            ->order_by('id', 'DESC')
+            ->get('expertise')
+            ->result();
+
+        $this->load->view('frontend/expertise_section', $data);
     }
 
 
+    private function load_footer()
+    {
+        $data['footer_products'] = $this->general_model->getFooterProducts();
+        $this->load->view('footer', $data);
+    }
 }

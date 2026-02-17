@@ -242,18 +242,30 @@
     // Delete category
     $(document).on('click', '.deleteCategory', function() {
       let id = $(this).data('id');
-      if (confirm('Are you sure you want to delete this category?')) {
-        $.ajax({
-          url: "<?= base_url('admin/service/delete_category/'); ?>" + id,
-          type: "POST",
-          dataType: "json",
-          success: function(res) {
-            alert(res.message);
-            if (res.status) loadCategories();
-          }
-        });
+
+      if (!confirm('Are you sure you want to delete this category?')) {
+        return;
       }
+
+      $.ajax({
+        url: "<?= base_url('admin/service/delete_category'); ?>/" + id,
+        type: "POST",
+        dataType: "json",
+        success: function(res) {
+          if (res.status) {
+            alert(res.message);
+            loadCategories();
+          } else {
+            alert(res.message);
+          }
+        },
+        error: function(xhr) {
+          console.log(xhr.responseText);
+          alert('Server error. Check console.');
+        }
+      });
     });
+
 
     // Open modal and load categories
     $('#addCategoryModal').on('show.bs.modal', function() {

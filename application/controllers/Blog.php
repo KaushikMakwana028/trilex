@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Blog extends CI_Controller
 {
@@ -7,7 +7,7 @@ class Blog extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('General_model');
+        $this->load->model('general_model'); 
     }
 
     // Blog listing page
@@ -30,7 +30,7 @@ class Blog extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('blog_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
 
@@ -50,7 +50,7 @@ class Blog extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('blog_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     public function fetchBlogs()
@@ -126,7 +126,6 @@ class Blog extends CI_Controller
 
             // Add pagination status as a hidden div
             echo '<div id="paginationInfo" data-total="' . $totalPages . '" data-current="' . $page . '" style="display:none;"></div>';
-
         } else {
             echo '
         <div class="col-12">
@@ -170,7 +169,7 @@ class Blog extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('blog_details', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
 
@@ -180,6 +179,12 @@ class Blog extends CI_Controller
         $data['blog'] = $this->Blog_model->getBlogById($id);
         $this->load->view('header');
         $this->load->view('blog/view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
+    }
+
+    private function load_footer()
+    {
+        $data['footer_products'] = $this->general_model->getFooterProducts();
+        $this->load->view('footer', $data);
     }
 }

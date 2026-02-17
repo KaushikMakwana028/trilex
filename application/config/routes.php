@@ -88,7 +88,6 @@ $route['service_details/(:num)'] = 'home/details/$1';
 
 
 
-
 $route['admin'] = 'admin/login';
 $route['dashboard'] = 'admin/dashboard';
 $route['customer'] = 'admin/customer';
@@ -102,12 +101,30 @@ $route['blog_category'] = 'admin/post/blog_category';
 $route['service_category'] = 'admin/service';
 $route['add_service'] = 'admin/service/add_service';
 $route['all_service'] = 'admin/service/list_services';
+$route['admin/service/delete_category/(:num)'] = 'admin/service/delete_category/$1';
 
 // Payment Settings Routes
 $route['admin/paymentsettings'] = 'admin/paymentsettings/index';
 $route['admin/paymentsettings/update_qr'] = 'admin/paymentsettings/update_qr';
 $route['admin/paymentsettings/update_bank'] = 'admin/paymentsettings/update_bank';
 $route['admin/paymentsettings/index'] = 'admin/paymentsettings/index';
+
+// About Routes 
+$route['admin/about'] = 'admin/about/index';
+$route['admin/about/update'] = 'admin/about/update';
+
+//Contact Routes
+$route['admin/contact'] = 'admin/contact/index';
+$route['admin/contact/update'] = 'admin/contact/update';
+
+// Expertise Routes
+$route['admin/expertise'] = 'admin/expertise/index';
+$route['admin/expertise/get_ajax'] = 'admin/expertise/get_ajax';
+$route['admin/expertise/toggle_status/(:num)'] = 'admin/expertise/toggle_status/$1';
+$route['admin/expertise/add'] = 'admin/expertise/add';
+$route['admin/expertise/edit/(:num)'] = 'admin/expertise/edit/$1';
+$route['admin/expertise/save'] = 'admin/expertise/save';
+
 
 $route['logout'] = 'admin/login/logout';
 

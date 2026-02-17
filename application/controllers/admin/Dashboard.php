@@ -32,6 +32,7 @@ class Dashboard extends CI_Controller
         $service_count = $this->db->count_all('services');
         $service_category_count = $this->db->count_all('service_category');
         $qr_count = $this->db->count_all('payment_settings');
+        $expertise_count = $this->db->count_all('expertise');
 
         $data = [
             'post_count' => $post_count,
@@ -41,7 +42,8 @@ class Dashboard extends CI_Controller
             'user_count' => $user_count,
             'service_count' => $service_count,
             'service_category_count' => $service_category_count,
-            'qr_count' => $qr_count
+            'qr_count' => $qr_count,
+            'expertise_count' => $expertise_count
         ];
 
         $this->load->view('admin/header');

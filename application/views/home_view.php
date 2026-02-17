@@ -40,19 +40,6 @@
         </div>
     </section>
 
-    <!-- TRUSTED BY -->
-    <section class="trusted-section">
-        <div class="container text-center">
-            <h5>Trusted by innovative companies worldwide</h5>
-            <div class="trusted-logos">
-                <i class="fab fa-google"></i>
-                <i class="fab fa-microsoft"></i>
-                <i class="fab fa-amazon"></i>
-                <i class="fab fa-apple"></i>
-            </div>
-        </div>
-    </section>
-
     <!-- FEATURES -->
     <section class="container py-5 mb-5">
         <h2 class="section-title">Why Choose Trilex Advisory?</h2>
@@ -96,64 +83,60 @@
         </div>
     </section>
 
-    <!-- SERVICES -->
+    <!-- Expertise -->
     <section class="services-section">
         <div class="container">
             <h2 class="section-title text-white">What We Do</h2>
 
-            <div class="row g-4">
+            <div class="services-wrapper">
 
-                <div class="col-md-4">
-                    <div class="service-box">
-                        <i class="fas fa-balance-scale"></i>
-                        <h4>Legal Advisory</h4>
-                        <p>Smart legal strategies for modern businesses.</p>
-                    </div>
+                <button class="scroll-btn left-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="services-slider" id="servicesSlider">
+
+                    <?php foreach ($expertise as $row): ?>
+
+                        <?php
+                        $text = strtolower($row->title . ' ' . $row->description);
+
+                        if (strpos($text, 'tax') !== false) {
+                            $icon = 'fa-calculator';
+                        } elseif (strpos($text, 'risk') !== false || strpos($text, 'security') !== false) {
+                            $icon = 'fa-shield-alt';
+                        } elseif (strpos($text, 'corporate') !== false || strpos($text, 'governance') !== false) {
+                            $icon = 'fa-building';
+                        } elseif (strpos($text, 'digital') !== false || strpos($text, 'technology') !== false) {
+                            $icon = 'fa-laptop-code';
+                        } elseif (strpos($text, 'financial') !== false) {
+                            $icon = 'fa-chart-pie';
+                        } else {
+                            $icon = 'fa-briefcase';
+                        }
+                        ?>
+
+                        <div class="service-box">
+                            <i class="fas <?= $icon ?>"></i>
+                            <h4><?= htmlspecialchars($row->title) ?></h4>
+                            <p><?= substr(strip_tags($row->description), 0, 100) ?></p>
+                        </div>
+
+                    <?php endforeach; ?>
+
                 </div>
 
-                <div class="col-md-4">
-                    <div class="service-box">
-                        <i class="fas fa-chart-pie"></i>
-                        <h4>Financial Consulting</h4>
-                        <p>Data-driven financial planning and growth.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="service-box">
-                        <i class="fas fa-laptop-code"></i>
-                        <h4>Technology Solutions</h4>
-                        <p>Digital transformation with cutting-edge tech.</p>
-                    </div>
-                </div>
+                <button class="scroll-btn right-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
 
             </div>
         </div>
     </section>
 
-    <!-- STATS -->
-    <section class="stats-section">
-        <div class="container text-center">
-            <div class="row">
 
-                <div class="col-md-4">
-                    <h2>120+</h2>
-                    <p>Clients Served</p>
-                </div>
 
-                <div class="col-md-4">
-                    <h2>45+</h2>
-                    <p>Global Partners</p>
-                </div>
 
-                <div class="col-md-4">
-                    <h2>10+</h2>
-                    <p>Years Experience</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
 
     <!-- CTA -->
     <section class="cta-section">
@@ -169,7 +152,6 @@
 </div>
 
 <style>
-    
     :root {
         --brand-teal: #0B3C5D;
         --brand-teal-light: #E7F1F7;
@@ -411,6 +393,59 @@
         color: #e5e7eb;
     }
 
+    /*==============Expertise SECTION ============= */
+
+    .services-wrapper {
+        position: relative;
+    }
+
+    .services-slider {
+        display: flex;
+        gap: 30px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+    }
+
+    .services-slider::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Desktop 3 cards */
+    .services-slider .service-box {
+        flex: 0 0 calc(33.333% - 20px);
+    }
+
+    /* Scroll buttons */
+    .scroll-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        border: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .left-btn {
+        left: -20px;
+    }
+
+    .right-btn {
+        right: -20px;
+    }
+
+    @media (max-width: 992px) {
+        .services-slider .service-box {
+            flex: 0 0 calc(50% - 15px);
+        }
+    }
+
+
     /* ================= MOBILE ================= */
     @media (max-width: 768px) {
         .hero-section {
@@ -430,5 +465,36 @@
         .hero-buttons {
             justify-content: center;
         }
+
+        .services-slider .service-box {
+            flex: 0 0 100%;
+        }
+
+        .scroll-btn {
+            display: none;
+        }
     }
 </style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const slider = document.getElementById("servicesSlider");
+        const leftBtn = document.querySelector(".left-btn");
+        const rightBtn = document.querySelector(".right-btn");
+
+        if (slider) {
+
+            rightBtn.addEventListener("click", function() {
+                slider.scrollLeft += slider.querySelector(".service-box").offsetWidth + 30;
+            });
+
+            leftBtn.addEventListener("click", function() {
+                slider.scrollLeft -= slider.querySelector(".service-box").offsetWidth + 30;
+            });
+
+        }
+
+    });
+</script>

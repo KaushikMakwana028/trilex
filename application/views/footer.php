@@ -1,230 +1,162 @@
-<!-- Footer -->
 <style>
-
     :root {
-        --primary-color: #1C768F;
-        --primary-dark: #155868;
+        --primary: #1f6f7f;
+        --primary-dark: #185a66;
+        --accent: #2bbbd8;
+        --white: #ffffff;
     }
-    /* Footer Styles */
+
+    /* ===== Footer Main ===== */
     footer {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-        color: var(--light-color);
-        padding: 60px 0 0;
-        position: relative;
-        overflow: hidden;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: var(--white);
+        padding: 55px 0 0;
     }
 
-    footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 50%, var(--primary-color) 100%);
-    }
-
-    /* Logo Container */
-    .logo-container {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-        border-radius: 12px;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 15px rgba(28, 118, 143, 0.3);
-    }
-
-    .logo-icon {
-        color: white;
-        font-size: 24px;
-    }
-
+    /* Headings */
     footer h5 {
-        color: #ffffff;
+        font-size: 22px;
         font-weight: 700;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
         display: flex;
         align-items: center;
+        margin-bottom: 20px;
     }
 
     footer h6 {
-        color: #ffffff;
+        font-size: 17px;
         font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 25px;
+        margin-bottom: 18px;
         position: relative;
-        padding-bottom: 12px;
+        padding-bottom: 8px;
     }
 
     footer h6::after {
-        content: '';
+        content: "";
+        width: 35px;
+        height: 3px;
+        background: var(--accent);
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 40px;
-        height: 3px;
-        background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
         border-radius: 2px;
     }
 
-    /* Footer Description */
-    footer p {
-        color: var(--light-color);
-        opacity: 0.9;
-        line-height: 1.8;
-        font-size: 0.95rem;
-    }
-
-    /* Social Media Links */
-    .social-links {
-        margin-top: 25px;
-    }
-
-    .social-links a {
-        display: inline-flex;
+    /* Logo Box */
+    .logo-container {
+        width: 75px;
+        height: 75px;
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 10px;
+        margin-right: 15px;
+        display: flex;
         align-items: center;
         justify-content: center;
-        width: 45px;
-        height: 45px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        color: #ffffff;
-        margin-right: 12px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
     }
 
-    .social-links a:hover {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(28, 118, 143, 0.4);
+    .logo-container img {
+        max-width: 100%;
+        height: auto;
     }
 
-    /* Footer Links */
+    /* Lists */
     footer ul {
         list-style: none;
         padding: 0;
     }
 
     footer ul li {
-        margin-bottom: 12px;
+        margin-bottom: 9px;
     }
 
     footer ul li a {
-        color: var(--light-color);
-        opacity: 0.9;
+        color: #e6f7fb;
         text-decoration: none;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        font-size: 0.95rem;
-    }
-
-    footer ul li a::before {
-        content: '›';
-        margin-right: 8px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--accent-color);
-        transition: all 0.3s ease;
+        font-size: 14px;
+        transition: 0.3s ease;
     }
 
     footer ul li a:hover {
         color: #ffffff;
-        padding-left: 8px;
+        padding-left: 6px;
     }
 
-    footer ul li a:hover::before {
-        margin-right: 12px;
+    /* Social Icons */
+    .social-links {
+        margin-top: 18px;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        color: #ffffff;
+        transition: 0.3s;
+    }
+
+    .social-links a:hover {
+        background: var(--accent);
+        transform: translateY(-4px);
     }
 
     /* Contact Info */
-    .contact-info {
-        color: var(--light-color);
-        opacity: 0.9;
-    }
-
-    .contact-info i {
-        color: var(--accent-color);
-        width: 25px;
-        font-size: 1.1rem;
-    }
-
     .contact-info-item {
         display: flex;
-        align-items: start;
-        margin-bottom: 15px;
-        transition: all 0.3s ease;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 14px;
     }
 
-    .contact-info-item:hover {
-        color: #ffffff;
-        padding-left: 5px;
-    }
-
-    .contact-info-item:hover i {
-        color: var(--primary-color);
+    .contact-info-item i {
+        width: 22px;
+        color: var(--accent);
     }
 
     /* Divider */
     footer hr {
         border: none;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        margin: 50px 0 25px;
+        background: rgba(255, 255, 255, 0.15);
+        margin: 40px 0 20px;
     }
 
-    /* Copyright Section */
+    /* Bottom Section */
     .footer-bottom {
-        text-align: center;
-        padding: 25px 0;
-        background: rgba(1, 22, 30, 0.3);
-        margin-top: 50px;
+        background: #1a5e6b;
+        padding: 18px 0;
     }
 
     .footer-bottom p {
         margin: 0;
-        color: var(--light-color);
-        opacity: 0.7;
-        font-size: 0.9rem;
+        font-size: 14px;
+        color: #cceef5;
     }
 
     .footer-bottom a {
-        color: var(--accent-color);
+        color: #cceef5;
         text-decoration: none;
-        transition: all 0.3s ease;
+        transition: 0.3s;
     }
 
     .footer-bottom a:hover {
-        color: var(--primary-color);
+        color: #ffffff;
     }
 
-    /* Responsive Design */
-    @media (max-width: 991px) {
+    /* Responsive */
+    @media (max-width:768px) {
         footer {
-            padding: 50px 0 0;
+            text-align: center;
         }
 
         footer h5 {
-            font-size: 1.3rem;
-        }
-
-        .logo-container {
-            width: 45px;
-            height: 45px;
-        }
-
-        .logo-icon {
-            font-size: 22px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        footer {
-            padding: 40px 0 0;
-            text-align: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
         }
 
         footer h6::after {
@@ -232,66 +164,12 @@
             transform: translateX(-50%);
         }
 
-        footer ul li a {
-            justify-content: center;
-        }
-
-        .social-links {
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-
-        .social-links a {
-            margin: 0 6px;
-        }
-
         .contact-info-item {
             justify-content: center;
-            text-align: left;
-        }
-
-        footer hr {
-            margin: 40px 0 20px;
-        }
-
-        .footer-bottom {
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        footer h5 {
-            font-size: 1.2rem;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        footer h6 {
-            font-size: 1rem;
-        }
-
-        .logo-container {
-            width: 40px;
-            height: 40px;
-        }
-
-        .logo-icon {
-            font-size: 20px;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-        }
-
-        footer p,
-        footer ul li a,
-        .contact-info {
-            font-size: 0.9rem;
         }
     }
 </style>
+
 
 
 <footer>
@@ -306,8 +184,8 @@
                     </div>
                     <span>Trilex Advisories</span>
                 </h5>
-                <p>Professional automation tools and comprehensive solutions designed for Chartered Accountants and Tax
-                    Professionals to streamline their workflow.</p>
+                <!-- <p>Professional automation tools and comprehensive solutions designed for Chartered Accountants and Tax
+                    Professionals to streamline their workflow.</p> -->
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
@@ -333,30 +211,41 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h6>Our Products</h6>
                 <ul>
-                    <li><a href="#">GST Tools</a></li>
-                    <li><a href="#">TDS Solutions</a></li>
-                    <li><a href="#">Tax Planning</a></li>
-                    <li><a href="#">Audit Tools</a></li>
-                    <li><a href="#">Compliance Suite</a></li>
-                    <li><a href="#">Reporting Tools</a></li>
+                    <?php if (!empty($footer_products)) : ?>
+                        <?php foreach ($footer_products as $product) : ?>
+                            <li>
+                                <a href="<?= base_url('product/detail/' . $product->id); ?>">
+                                    <?php
+                                    $title = strip_tags($product->title);
+                                    echo (mb_strlen($title) > 35)
+                                        ? mb_substr($title, 0, 35) . '...'
+                                        : $title;
+                                    ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <li>No Products Available</li>
+                    <?php endif; ?>
                 </ul>
             </div>
+
 
             <!-- Contact Info -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h6>Contact Us</h6>
                 <div class="contact-info">
-                    <div class="contact-info-item">
+                    <!-- <div class="contact-info-item">
                         <i class="fas fa-map-marker-alt me-2"></i>
                         <span>Ahmedabad, Gujarat,<br>India - 380001</span>
-                    </div>
-                    <div class="contact-info-item">
+                    </div> -->
+                    <!-- <div class="contact-info-item">
                         <i class="fas fa-phone me-2"></i>
                         <span>+91 98765 43210</span>
-                    </div>
+                    </div> -->
                     <div class="contact-info-item">
                         <i class="fas fa-envelope me-2"></i>
-                        <span>info@trilexadvisories.com</span>
+                        <span>trilexadvisory@gmail.com</span>
                     </div>
                     <div class="contact-info-item">
                         <i class="fas fa-clock me-2"></i>
@@ -428,7 +317,7 @@
     // Active link highlighting for bottom nav
     const bottomNavLinks = document.querySelectorAll('#bottomNav a');
     bottomNavLinks.forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function() {
             bottomNavLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
@@ -436,16 +325,16 @@
 
     // Active link highlighting for sidebar
     sidebarLinks.forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function() {
             sidebarLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const submenuLinks = document.querySelectorAll('.has-submenu > a');
 
         submenuLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const parent = this.parentElement;
                 parent.classList.toggle('open');

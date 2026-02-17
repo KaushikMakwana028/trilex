@@ -21,7 +21,7 @@ class Product extends CI_Controller
     {
         $this->load->view('header');
         $this->load->view('product_view');
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     public function fetch_products()
@@ -190,7 +190,7 @@ class Product extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('product_details', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
     public function checkout($id)
@@ -219,7 +219,7 @@ class Product extends CI_Controller
 
         $this->load->view('header');
         $this->load->view('payment_view', $data);
-        $this->load->view('footer');
+        $this->load_footer();
     }
 
 
@@ -268,5 +268,11 @@ class Product extends CI_Controller
         $this->db->insert('orders', $data);
 
         echo json_encode(['status' => 'success']);
+    }
+
+    private function load_footer()
+    {
+        $data['footer_products'] = $this->general_model->getFooterProducts();
+        $this->load->view('footer', $data);
     }
 }

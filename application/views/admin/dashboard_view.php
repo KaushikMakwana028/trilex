@@ -96,14 +96,27 @@
             </div>
 
             <div class="stat-card stat-orange" style="--percent:99%"
-                onclick="window.location.href='<?= base_url('qr_codes') ?>'">
+                onclick="window.location.href='<?= base_url('admin/paymentSettings') ?>'">
                 <div class="stat-header">
                     <div>
-                        <div class="stat-title">QR Codes</div>
+                        <div class="stat-title">Bank Details</div>
                         <div class="stat-value"><?= $qr_count ?></div>
                         <div class="stat-meta">Generated & Active</div>
                     </div>
                     <div class="stat-icon"><i class="bx bx-qr-scan"></i></div>
+                </div>
+                <div class="stat-progress"><span></span></div>
+            </div>
+
+            <div class="stat-card stat-teal" style="--percent:78%"
+                onclick="window.location.href='<?= base_url('admin/expertise') ?>'">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Expertise</div>
+                        <div class="stat-value"><?= $expertise_count ?></div>
+                        <div class="stat-meta">Generated & Active</div>
+                    </div>
+                    <div class="stat-icon"><i class="bx bx-badge-check"></i></div>
                 </div>
                 <div class="stat-progress"><span></span></div>
             </div>
@@ -240,6 +253,10 @@
 
     .stat-rose .stat-icon {
         background: linear-gradient(135deg, #e11d48, #fb7185);
+    }
+
+    .stat-teal .stat-icon {
+        background: linear-gradient(135deg, #0f766e, #14b8a6);
     }
 
     /* ================= PROGRESS LINE ================= */
